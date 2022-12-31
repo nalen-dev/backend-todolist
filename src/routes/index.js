@@ -7,6 +7,6 @@ const middleware = require("../middleware");
 router.post("/login", middleware.loginValidation, user.loginHandler);
 
 //todolist routes
-router.post("/todos", middleware.authentication, middleware, middleware.createTaskValidation, todolist.createTask);
+router.post("/todos", middleware.authentication, middleware.createTaskValidation, todolist.createTask);
 
 module.exports = router;
