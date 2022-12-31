@@ -13,7 +13,7 @@ router.use(express.json());
 router.post("/login", login[0]);
 
 router.get("/users", (req, res) => {
-  res.json(users[1]);
+  res.json(login[1]);
 });
 
 router.get("/", (req, res) => {
