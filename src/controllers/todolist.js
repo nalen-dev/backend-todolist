@@ -5,9 +5,9 @@ const createTask = (req, res) => {
   const userId = req.body.userId;
 
   if (tasks.length < 1) {
-    tasks.push({ id: 1, userId, title, description });
+    tasks.push({ id: 1, userId, title, description, status: false });
   } else {
-    tasks.push({ id: tasks[tasks.length - 1].id + 1, userId, title, description });
+    tasks.push({ id: tasks[tasks.length - 1].id + 1, userId, title, description, status: false });
   }
   return res.status(201).json({ msg: "new task created!" });
 };
@@ -23,8 +23,32 @@ const findTasksByUserId = (req, res) => {
   return res.status(200).json({ data });
 };
 
+const updateTask = (req, res) => {
+  const id = parseInt(req.params.id);
+  const userId = req.body.userId;
+  const { title, body, status } = req.body;
+
+  if (isNaN(id) || tasks.length < 1) {
+    return res.status(400).json({ msg: "invalid input" });
+  }
+
+  const dataIndex = tasks.findIndex((task) => task.id == id);
+
+  if (data.userId != userId || dataIndex == -1) {
+    return res.status(401).json({ msg: "you dont hace access to this resource" });
+  }
+
+  tasks[dataIndex] = {
+    title: title || tasks[dataIndex].title,
+    description: description || tasks[dataIndex].description,
+    status: status || tasks[dataIndex].status,
+  };
+  return res.status(201).json({ msg: "data updated!", data: tasks[dataIndex] });
+};
+
 module.exports = {
   tasks,
   createTask,
   findTasksByUserId,
+  updateTask,
 };
