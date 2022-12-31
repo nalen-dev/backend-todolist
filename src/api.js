@@ -3,14 +3,13 @@ const serverless = require("serverless-http");
 
 const app = express();
 const router = express.Router();
-const login = require("./controllers/user");
+const routers = require("./routes");
 
 const tasks = [];
 
 router.use(express.json());
 
-//login user
-router.post("/login", login.loginHandler);
+router.use(routers);
 
 router.get("/users", (req, res) => {
   res.json(login.users);
