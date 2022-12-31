@@ -61,7 +61,7 @@ const deleteTask = (req, res) => {
   }
 
   const deletedData = tasks.splice(dataIndex, 1);
-  return res.status(201).json({ msg: `Task with id ${deletedData.id} deleted` });
+  return res.status(201).json({ msg: `Task with id ${deletedData[0].id} deleted` });
 };
 
 module.exports = {
