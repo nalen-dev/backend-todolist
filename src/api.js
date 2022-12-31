@@ -8,6 +8,8 @@ const login = require("./controllers/login");
 const users = [];
 const tasks = [];
 
+router.use(express.json());
+
 //login user
 router.post("/login", login);
 
