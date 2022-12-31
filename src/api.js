@@ -7,8 +7,6 @@ const routers = require("./routes");
 
 const { users } = require("./controllers/user");
 
-const tasks = [];
-
 router.use(express.json());
 
 router.use(routers);
