@@ -5,6 +5,8 @@ const app = express();
 const router = express.Router();
 const routers = require("./routes");
 
+const { users } = require("./controllers/user");
+
 const tasks = [];
 
 router.use(express.json());
@@ -12,7 +14,7 @@ router.use(express.json());
 router.use(routers);
 
 router.get("/users", (req, res) => {
-  res.json(login.users);
+  res.json(users);
 });
 
 router.get("/", (req, res) => {
