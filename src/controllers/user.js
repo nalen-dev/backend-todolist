@@ -7,8 +7,13 @@ const loginHandler = (req, res, next) => {
 
   const token = jwt.sign({ userId }, "secretkey");
 
-  users.push({ userId });
-  return res.status(201).json({ msg: "user created!", token });
+  const checkUser = users.find((user) => user.userId == userId);
+
+  if (checkUser == undefined) {
+    users.push({ userId });
+    return res.status(201).json({ msg: "new user created!", token });
+  }
+  return res.status(200).json({ msg: "login success", token });
 };
 
 module.exports = { loginHandler, users };
