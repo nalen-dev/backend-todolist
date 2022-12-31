@@ -46,9 +46,28 @@ const updateTask = (req, res) => {
   return res.status(201).json({ msg: "data updated!", data: tasks[dataIndex] });
 };
 
+const deleteTask = (req, res) => {
+  const id = parseInt(req.params.id);
+  const userId = req.body.userId;
+
+  if (isNaN(id) || tasks.length < 1) {
+    return res.status(400).json({ msg: "invalid input" });
+  }
+
+  const dataIndex = tasks.findIndex((task) => task.id == id);
+
+  if (data.userId != userId || dataIndex == -1) {
+    return res.status(401).json({ msg: "you dont hace access to this resource" });
+  }
+
+  const deletedData = tasks.splice(dataIndex, 1);
+  return res.status(201).json({ msg: `Task with id ${deletedData.id} deleted` });
+};
+
 module.exports = {
   tasks,
   createTask,
   findTasksByUserId,
   updateTask,
+  deleteTask,
 };
