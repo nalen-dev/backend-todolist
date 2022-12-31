@@ -26,7 +26,7 @@ const findTasksByUserId = (req, res) => {
 const updateTask = (req, res) => {
   const id = parseInt(req.params.id);
   const userId = req.body.userId;
-  const { title, body, status } = req.body;
+  const { title, description, status } = req.body;
 
   if (isNaN(id) || tasks.length < 1) {
     return res.status(400).json({ msg: "invalid input" });
@@ -34,7 +34,7 @@ const updateTask = (req, res) => {
 
   const dataIndex = tasks.findIndex((task) => task.id == id);
 
-  if (data.userId != userId || dataIndex == -1) {
+  if (tasks[dataIndex].userId != userId || dataIndex == -1) {
     return res.status(401).json({ msg: "you dont hace access to this resource" });
   }
 
@@ -56,7 +56,7 @@ const deleteTask = (req, res) => {
 
   const dataIndex = tasks.findIndex((task) => task.id == id);
 
-  if (data.userId != userId || dataIndex == -1) {
+  if (tasks[dataIndex].userId != userId || dataIndex == -1) {
     return res.status(401).json({ msg: "you dont hace access to this resource" });
   }
 
