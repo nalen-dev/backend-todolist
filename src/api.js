@@ -3,15 +3,15 @@ const serverless = require("serverless-http");
 
 const app = express();
 const router = express.Router();
+const login = require("./controllers/login");
 
-const users = [{ userId: 1, tasks: [] }];
+const users = [];
+const tasks = [];
 
-router.get("/user", (req, res) => {
-  res.json(users);
-});
+//login user
+router.post("/login", login);
 
-router.get("/adduser", (req, res) => {
-  users.push({ userId: 2, tasks: [] });
+router.get("/users", (req, res) => {
   res.json(users);
 });
 
@@ -25,3 +25,5 @@ app.use(`/.netlify/functions/api`, router);
 
 module.exports = app;
 module.exports.handler = serverless(app);
+module.exports.users = users;
+module.exports.tasks = tasks;
