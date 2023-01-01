@@ -1,0 +1,531 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "ToDo List API - OpenAPI 3.0",
+    "description": "This API is for personal needs and built based in memory database, so data won't stored in long time period.",
+    "version": "1",
+    "contact": {
+      "name": "Nalendra Praja Manggala",
+      "url": "https://nlndrpraja.github.io/home/",
+      "email": "nalendrapraja11@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://todolist-binar.netlify.app/.netlify/functions/api/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user"
+    },
+    {
+      "name": "todos"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["user"],
+        "description": "user login and get token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application.json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "number"
+                  }
+                },
+                "example": {
+                  "userId": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "register user success",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "msg": "login success!"
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "success login",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "msg": "new user created!"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "login fail",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "errorValidation": {
+                    "value": {
+                      "msg": "some field required"
+                    }
+                  },
+                  "errorUserIdDigits": {
+                    "value": {
+                      "msg": "id must be 4 numbers or more"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todos": {
+      "post": {
+        "tags": ["todos"],
+        "description": "create new task",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application.json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "title": "home work",
+                  "description": "Do it ealier so you can play valorant more!"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "success create new task",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "msg": "new task created!"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "fail to create new task",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "errorValidation": {
+                    "value": {
+                      "msg": "some field required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "token is invalid",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "msg": "bad token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "hit resource without token/auth header",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "msg": "can't access this resource, please login first"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["todos"],
+        "description": "find task based on token given",
+        "responses": {
+          "200": {
+            "description": "register user success",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  },
+                  "example": {
+                    "data": [
+                      {
+                        "id": 2,
+                        "userId": 1,
+                        "title": "home work",
+                        "description": "Do it ealier so you can play valorant more!"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "when there is no task yet",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "msg": "No task yet!"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "token is invalid",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "msg": "bad token"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todos/{id}": {
+      "put": {
+        "tags": ["todos"],
+        "description": "update task",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id number of the task",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application.json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "examples": {
+                "udpateStatus": {
+                  "value": {
+                    "status": true
+                  }
+                },
+                "udpateDescription": {
+                  "value": {
+                    "description": "do it earlier so there would be more family time this weekend"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "success update task",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "msg": "data updated!"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "user error",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "pathParams": {
+                    "value": {
+                      "msg": "path parameter is invalid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user error",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "authError": {
+                    "value": {
+                      "msg": "you dont hace access to this resource"
+                    }
+                  },
+                  "badToken": {
+                    "value": {
+                      "msg": "bad token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "hit resource without token/auth header",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "msg": "can't access this resource, please login first"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["todos"],
+        "description": "update task",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id number of the task",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "success update task",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "msg": "Task with id 1 deleted"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "user error",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "pathParams": {
+                    "value": {
+                      "msg": "path parameter is invalid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user error",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "authError": {
+                    "value": {
+                      "msg": "you dont hace access to this resource"
+                    }
+                  },
+                  "badToken": {
+                    "value": {
+                      "msg": "bad token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "hit resource without token/auth header",
+            "content": {
+              "application.json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "msg": "can't access this resource, please login first"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
