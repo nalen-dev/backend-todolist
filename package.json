@@ -16,13 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/owenconti/netlify-express.git"
+    "url": "git+https://github.com/nlndrpraja/backend-todolist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/owenconti/netlify-express/issues"
+    "url": "https://github.com/nlndrpraja/backend-todolist/issues"
   },
-  "homepage": "https://github.com/owenconti/netlify-express#readme"
+  "homepage": "https://github.com/nlndrpraja/backend-todolist#readme"
 }
