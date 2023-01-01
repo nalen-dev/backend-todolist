@@ -17,7 +17,7 @@ const findTasksByUserId = (req, res) => {
   const data = tasks.filter((task) => task.userId == userId);
 
   if (data.length < 0) {
-    return res.status(200).json({ msg: "No task yet!" });
+    return res.status(400).json({ msg: "No task yet!" });
   }
 
   return res.status(200).json({ data });
@@ -29,7 +29,7 @@ const updateTask = (req, res) => {
   const { title, description, status } = req.body;
 
   if (isNaN(id) || tasks.length < 1) {
-    return res.status(400).json({ msg: "invalid input" });
+    return res.status(400).json({ msg: "path parameter is invalid" });
   }
 
   const dataIndex = tasks.findIndex((task) => task.id == id);

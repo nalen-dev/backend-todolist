@@ -12,6 +12,6 @@ module.exports = (req, res, next) => {
     req.body.userId = data.userId;
     return next();
   } catch (error) {
-    return res.status(401).json({ msg: "invalid token" });
+    return res.status(401).json({ msg: "bad token" });
   }
 };
